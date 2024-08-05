@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gammelin - Redirection</title>
+    <style>
+        #progress-bar {
+            width: 100%;
+            background-color: #f3f3f3;
+            border: 1px solid #ccc;
+        }
+        #progress {
+            width: 0;
+            height: 30px;
+            background-color: #4caf50;
+        }
+    </style>
+    <script type="text/javascript">
+        // Définir le temps de redirection en secondes
+        const redirectionTime = 10; // Changer cette valeur pour ajuster le temps
+
+        // Fonction de redirection
+        function redirect() {
+            window.location.href = "/static/s_site/site.html"; // Chemin relatif
+        }
+
+        // Fonction pour mettre à jour la barre de progression
+        function updateProgressBar() {
+            const progressBar = document.getElementById('progress');
+            const countdownElement = document.getElementById('countdown');
+            let width = 0;
+            let remainingTime = redirectionTime;
+
+            countdownElement.textContent = remainingTime;
+
+            const interval = setInterval(function() {
+                if (width >= 100) {
+                    clearInterval(interval);
+                } else {
+                    width += 100 / redirectionTime;
+                    progressBar.style.width = width + '%';
+                    remainingTime -= 1;
+                    countdownElement.textContent = remainingTime;
+                }
+            }, 1000);
+
+            // Redirection instantanée
+            redirect();
+        }
+
+        // Initialiser la mise à jour de la barre de progression
+        window.onload = function() {
+            updateProgressBar();
+        };
+    </script>
+</head>
+<body>
+    <p>Vous allez être redirigé vers le site dans quelques secondes (<span id="countdown"></span>) . Si la redirection ne fonctionne pas, cliquez <a href="/static/s_site/site.html">ici</a>.</p>
+    <div id="progress-bar">
+        <div id="progress"></div>
+    </div>
+</body>
+</html>
